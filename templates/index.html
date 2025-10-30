@@ -47,8 +47,10 @@
             justify-content: center;
             font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
             font-family: var(--font-heading);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .sidebar .devices {
@@ -452,7 +454,6 @@
         }
 
         .notifications-list li {
-            display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 8px; /* Reduced padding */
@@ -473,7 +474,10 @@
         .notifications-list .message {
             font-size: 0.9rem; /* Slightly smaller font size */
             color: #333;
-            flex: 1;
+        }
+
+        .computer-list th:last-child, .computer-list td:last-child {
+            width: 200px; /* Adjusted width for the Actions column */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -521,8 +525,8 @@
                 <table class="computer-list">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Device</th>
+                            <th>RustDesk ID</th>
+                            <th>Device Name</th>
                             <th>Created</th>
                             <th>Password</th>
                             <th>Notes</th>
@@ -539,7 +543,7 @@
                             <td>{{ device['notes'] }}</td>
                             <td>
                                 <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                                <a href="rustdesk://{{ device['id'] }}" class="action-btn connect-btn" title="Connect to Device">Connect</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -550,7 +554,7 @@
                 <h3>Notifications</h3>
                 <ul class="notifications-list">
                     {% for log in logs %}
-                        <li><strong>{{ log['created_at'][:10] }}:</strong> {{ log['action'] }}</li>
+                        <li><strong style="display: inline-block; margin-right: 5px;">{{ log['created_at'][:10] }}</strong> {{ log['action'] }}</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -560,7 +564,10 @@
         <div id="edit-connection-modal" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="close-btn">&times;</span>
-                <h2>Edit Connection</h2>
+                <h2 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.5rem;">Edit Device</h2>
+                <div style="margin: 20px 0 15px;">
+                    <span id="device-id-title" style="display: block; padding: 10px; background-color: #f1f5f9; border: 1px solid #ccc; border-radius: 4px; font-family: 'Roboto Mono', monospace; font-size: 1.1rem; font-weight: bold; text-align: center;">N/A</span>
+                </div>
                 <form id="edit-connection-form">
                     <label for="device-name">Device Name:</label>
                     <input type="text" id="device-name" name="device-name" required>
@@ -742,10 +749,12 @@
                     const deviceName = row.querySelector('td:nth-child(1)').textContent;
                     const password = row.querySelector('.pw-raw').textContent;
                     const notes = row.querySelector('td:nth-child(5)').textContent;
+                    const deviceId = row.querySelector('.id-toggle').textContent.trim(); // Get the device ID
 
                     document.getElementById('device-name').value = deviceName;
                     document.getElementById('device-password').value = password;
                     document.getElementById('device-notes').value = notes;
+                    document.getElementById('device-id-title').textContent = deviceId; // Set the device ID in the modal
 
                     openModal();
                 });
@@ -787,6 +796,68 @@
 
             // Example: Open modal on button click
             document.querySelector('.new-group-btn').addEventListener('click', openNewGroupModal);
+        });
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            $('.edit-btn').on('click', function() {
+                const row = $(this).closest('tr');
+                const deviceId = row.find('td:nth-child(1)').text().trim(); // Fetch ID from the first column
+                const deviceName = row.find('td:nth-child(2)').text().trim(); // Fetch Name from the second column
+                const password = row.find('.pw-raw').text().trim();
+                const notes = row.find('td:nth-child(5)').text().trim();
+
+                // Open modal and populate fields
+                $('#device-id-title').text(deviceId); // Set the device ID in the title
+                $('#device-name').val(deviceName); // Set the device name in the input field
+                $('#device-password').val(password);
+                $('#device-notes').val(notes);
+                $('#edit-connection-modal').data('device-id', deviceId).show();
+            });
+
+            $('#edit-connection-form').on('submit', function(e) {
+                e.preventDefault();
+
+                const deviceId = $('#edit-connection-modal').data('device-id');
+                const updatedName = $('#device-name').val();
+                const updatedPassword = $('#device-password').val();
+                const updatedNotes = $('#device-notes').val();
+
+                // Send AJAX request to update the device
+                $.ajax({
+                    url: '/update_device',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        id: deviceId,
+                        name: updatedName,
+                        password: updatedPassword,
+                        notes: updatedNotes
+                    }),
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Update the table row with new values
+                            const row = $(`td:contains(${deviceId})`).closest('tr'); // Match ID in the first column
+                            row.find('td:nth-child(2)').text(updatedName); // Update Name in the second column
+                            row.find('.pw-raw').text(updatedPassword);
+                            row.find('td:nth-child(5)').text(updatedNotes);
+
+                            // Close the modal
+                            $('#edit-connection-modal').hide();
+                        } else {
+                            alert('Failed to update device: ' + response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred while updating the device.');
+                    }
+                });
+            });
+
+            $('.close-btn, .cancel-btn').on('click', function() {
+                $('#edit-connection-modal').hide();
+            });
         });
         </script>
     </div>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, jsonify
 import sqlite3
 import os
 import hashlib
@@ -130,6 +130,27 @@ def add_device():
 @app.route('/images/<path:filename>')
 def serve_image(filename):
     return send_from_directory(os.path.join(app.root_path, 'templates/images'), filename)
+
+@app.route('/update_device', methods=['POST'])
+def update_device():
+    data = request.get_json()
+    device_id = data.get('id')
+    name = data.get('name')
+    password = data.get('password')
+    notes = data.get('notes')
+
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE devices
+            SET name = ?, password = ?, notes = ?
+            WHERE id = ?
+        ''', (name, password, notes, device_id))
+        conn.commit()
+
+    write_db_log(f'Updated device {device_id} (name: {name}, password: {password}, notes: {notes})')
+
+    return {'status': 'success', 'message': 'Device updated successfully'}
 
 if __name__ == '__main__':
     init_db()
