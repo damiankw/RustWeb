@@ -59,7 +59,3 @@ The application integrates directly into RustDesk database itself and provides r
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
-
----
-
-For further assistance, please contact the repository owner.
