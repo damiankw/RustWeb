@@ -13,7 +13,6 @@ def init_db():
         create_rustweb_db()
 
     # Update the RustWeb database with running information
-    
 
 def create_rustweb_db():
     # Create the logs table
@@ -97,7 +96,7 @@ def get_db_devices():
 def get_db_logs():
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM logs ORDER BY created_at DESC LIMIT 20")
+        cursor.execute("SELECT * FROM logs ORDER BY created_at DESC LIMIT 15")
         logs = cursor.fetchall()
     return logs
 
@@ -148,9 +147,21 @@ def update_device():
         ''', (name, password, notes, device_id))
         conn.commit()
 
-    write_db_log(f'Updated device {device_id} (name: {name}, password: {password}, notes: {notes})')
+    write_db_log(f'Updated device {device_id} (name: {name}, notes: {notes})')
 
     return {'status': 'success', 'message': 'Device updated successfully'}
+
+@app.route('/log_connection', methods=['POST'])
+def log_connection():
+    data = request.get_json()
+    device_id = data.get('id')
+    message = data.get('message')
+
+    if not device_id or not message:
+        return {'status': 'error', 'message': 'Invalid data'}, 400
+
+    write_db_log(message)
+    return {'status': 'success', 'message': 'Connection logged successfully'}
 
 if __name__ == '__main__':
     init_db()

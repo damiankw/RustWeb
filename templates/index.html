@@ -53,6 +53,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+
         .sidebar .devices {
             flex: 1;
             padding: 0 1rem;
@@ -491,7 +492,7 @@
         </div>
         <div class="devices">
             <div class="devices-header">
-                <h3>Devices</h3>
+                <h3>Device Groups</h3>
                 <span class="action-btn new-group-btn">+</span>
             </div>
             <ul>
@@ -858,8 +859,24 @@
             $('.close-btn, .cancel-btn').on('click', function() {
                 $('#edit-connection-modal').hide();
             });
+
+            $('.connect-btn').on('click', function(e) {
+                const row = $(this).closest('tr');
+                const deviceId = row.find('td:nth-child(1)').text().trim(); // Fetch ID from the first column
+
+
+                // Send AJAX request to log the connection in the database
+                $.ajax({
+                    url: '/log_connection',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        id: deviceId,
+                        message: `Started connection with ${deviceId}`
+                    }),
+                });
+            });
         });
         </script>
-    </div>
 </body>
 </html>
