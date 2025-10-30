@@ -413,6 +413,68 @@
             border-top: 1px solid #ccc; /* Separator between 'All Devices' and groups */
             margin: 10px 0;
         }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .table-container {
+            flex: 3;
+            margin-right: 20px;
+        }
+
+        .notifications-bar {
+            flex: 1;
+            background-color: #f9fafc; /* Match the main background */
+            border-left: 1px solid #e0e0e0;
+            padding: 10px; /* Reduced padding */
+            box-shadow: none; /* Removed shadow */
+            border-radius: 4px; /* Reduced border radius */
+            font-size: 0.9rem; /* Slightly smaller font size */
+        }
+
+        .notifications-bar h3 {
+            margin-top: 0;
+            font-size: 1.2rem; /* Slightly smaller heading */
+            color: #333;
+            padding-bottom: 5px; /* Removed border-bottom */
+        }
+
+        .notifications-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notifications-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px; /* Reduced padding */
+            margin-bottom: 8px; /* Reduced margin */
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px; /* Reduced border radius */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            transition: box-shadow 0.3s ease;
+        }
+
+        .notifications-list .time {
+            font-size: 0.8rem; /* Smaller font size */
+            color: #888;
+            margin-right: 10px;
+        }
+
+        .notifications-list .message {
+            font-size: 0.9rem; /* Slightly smaller font size */
+            color: #333;
+            flex: 1;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -453,388 +515,400 @@
                 </a>
                 rustdesk
             </div>
-
         </div>
-        <table class="computer-list">
-            <thead>
-                <tr>
-                    <th>Device</th>
-                    <th>ID</th>
-                    <th>Start Time</th>
-                    <th>Password</th>
-                    <th>Notes</th>
-                    <th>Actions</th> <!-- Added Actions column -->
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Orion-PC</td>
-                    <td><span class="id-toggle">12345<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>10:00 AM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">password123</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Office PC</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Nova-Workstation</td>
-                    <td><span class="id-toggle">67890<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>11:00 AM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">password456</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Home PC</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Atlas-Laptop</td>
-                    <td><span class="id-toggle">23456<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>09:30 AM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">pass789</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Remote</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vega-Server</td>
-                    <td><span class="id-toggle">34567<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>08:15 AM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">admin321</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Data Center</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Zenith-Desktop</td>
-                    <td><span class="id-toggle">45678<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>12:00 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">zenithpass</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Design</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Phoenix-Book</td>
-                    <td><span class="id-toggle">56789<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>01:45 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">phoenix1</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Travel</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cosmos-Station</td>
-                    <td><span class="id-toggle">67891<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>02:30 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">cosmos22</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Lab</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Helios-Tower</td>
-                    <td><span class="id-toggle">78912<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>03:10 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">helios88</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Server Room</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Neptune-Terminal</td>
-                    <td><span class="id-toggle">89123<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>04:00 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">neptune77</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Reception</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gemini-Node</td>
-                    <td><span class="id-toggle">91234<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>05:20 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">gemini66</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>QA</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Polaris-Unit</td>
-                    <td><span class="id-toggle">10234<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>06:00 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">polaris55</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Support</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Lyra-Device</td>
-                    <td><span class="id-toggle">11234<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
-                    <td>07:15 PM</td>
-                    <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">lyra44</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
-                    <td>Development</td>
-                    <td>
-                        <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                        <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Popup Modal for Editing Connections -->
-    <div id="edit-connection-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Edit Connection</h2>
-            <form id="edit-connection-form">
-                <label for="device-name">Device Name:</label>
-                <input type="text" id="device-name" name="device-name" required>
-
-                <label for="device-password">Password:</label>
-                <input type="text" id="device-password" name="device-password" required>
-
-                <label for="device-notes">Notes:</label>
-                <textarea id="device-notes" name="device-notes" rows="4"></textarea>
-
-                <button type="submit" class="action-btn save-btn">Save</button>
-                <button type="button" class="action-btn cancel-btn">Cancel</button>
-            </form>
+        <div class="content">
+            <div class="table-container">
+                <table class="computer-list">
+                    <thead>
+                        <tr>
+                            <th>Device</th>
+                            <th>ID</th>
+                            <th>Start Time</th>
+                            <th>Password</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Orion-PC</td>
+                            <td><span class="id-toggle">12345<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>10:00 AM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">password123</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Office PC</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nova-Workstation</td>
+                            <td><span class="id-toggle">67890<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>11:00 AM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">password456</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Home PC</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Atlas-Laptop</td>
+                            <td><span class="id-toggle">23456<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>09:30 AM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">pass789</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Remote</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Vega-Server</td>
+                            <td><span class="id-toggle">34567<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>08:15 AM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">admin321</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Data Center</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Zenith-Desktop</td>
+                            <td><span class="id-toggle">45678<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>12:00 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">zenithpass</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Design</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Phoenix-Book</td>
+                            <td><span class="id-toggle">56789<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>01:45 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">phoenix1</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Travel</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cosmos-Station</td>
+                            <td><span class="id-toggle">67891<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>02:30 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">cosmos22</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Lab</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Helios-Tower</td>
+                            <td><span class="id-toggle">78912<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>03:10 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">helios88</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Server Room</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Neptune-Terminal</td>
+                            <td><span class="id-toggle">89123<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>04:00 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">neptune77</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Reception</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gemini-Node</td>
+                            <td><span class="id-toggle">91234<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>05:20 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">gemini66</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>QA</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Polaris-Unit</td>
+                            <td><span class="id-toggle">10234<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>06:00 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">polaris55</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Support</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lyra-Device</td>
+                            <td><span class="id-toggle">11234<button class="id-copy" title="Copy ID"><i class="fas fa-copy"></i></button></span></td>
+                            <td>07:15 PM</td>
+                            <td><span class="pw-toggle"><span class="pw-value">•••••••••</span><span class="pw-raw" style="display:none;">lyra44</span><i class="fas fa-eye pw-icon" title="Show password"></i><button class="pw-copy" title="Copy password"><i class="fas fa-copy"></i></button></span></td>
+                            <td>Development</td>
+                            <td>
+                                <button class="action-btn edit-btn" title="Edit Device">Edit</button>
+                                <button class="action-btn connect-btn" title="Connect to Device">Connect</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="notifications-bar">
+                <h3>Notifications</h3>
+                <ul class="notifications-list">
+                    <li><strong>10:30 AM:</strong> User John logged in</li>
+                    <li><strong>10:45 AM:</strong> Device 1 connected by User Jane</li>
+                    <li><strong>11:00 AM:</strong> User John logged out</li>
+                    <li><strong>11:15 AM:</strong> Device 2 connected by User Jane</li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <!-- Popup Modal for Adding New Group -->
-    <div id="new-group-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>New Group</h2>
-            <form id="new-group-form">
-                <label for="group-name">Group Name:</label>
-                <input type="text" id="group-name" name="group-name" required>
+        <!-- Popup Modal for Editing Connections -->
+        <div id="edit-connection-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Edit Connection</h2>
+                <form id="edit-connection-form">
+                    <label for="device-name">Device Name:</label>
+                    <input type="text" id="device-name" name="device-name" required>
 
-                <button type="submit" class="action-btn save-btn">Create</button>
-                <button type="button" class="action-btn cancel-btn">Cancel</button>
-            </form>
+                    <label for="device-password">Password:</label>
+                    <input type="text" id="device-password" name="device-password" required>
+
+                    <label for="device-notes">Notes:</label>
+                    <textarea id="device-notes" name="device-notes" rows="4"></textarea>
+
+                    <button type="submit" class="action-btn save-btn">Save</button>
+                    <button type="button" class="action-btn cancel-btn">Cancel</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.querySelector('.search-container input');
-        const table = document.querySelector('.computer-list');
-        const tbody = table.querySelector('tbody');
-        // Store all rows for filtering
-        const allRows = Array.from(tbody.querySelectorAll('tr'));
+        <!-- Popup Modal for Adding New Group -->
+        <div id="new-group-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>New Group</h2>
+                <form id="new-group-form">
+                    <label for="group-name">Group Name:</label>
+                    <input type="text" id="group-name" name="group-name" required>
 
-        searchInput.addEventListener('input', function() {
-            const query = searchInput.value.trim().toLowerCase();
-            tbody.innerHTML = '';
-            allRows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                // Search by Device, ID, Notes (columns 0, 1, 4)
-                const device = cells[0].textContent.toLowerCase();
-                const id = cells[1].textContent.toLowerCase();
-                const notes = cells[4].textContent.toLowerCase();
-                if (
-                    device.includes(query) ||
-                    id.includes(query) ||
-                    notes.includes(query)
-                ) {
-                    tbody.appendChild(row);
+                    <button type="submit" class="action-btn save-btn">Create</button>
+                    <button type="button" class="action-btn cancel-btn">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-container input');
+            const table = document.querySelector('.computer-list');
+            const tbody = table.querySelector('tbody');
+            // Store all rows for filtering
+            const allRows = Array.from(tbody.querySelectorAll('tr'));
+
+            searchInput.addEventListener('input', function() {
+                const query = searchInput.value.trim().toLowerCase();
+                tbody.innerHTML = '';
+                allRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    // Search by Device, ID, Notes (columns 0, 1, 4)
+                    const device = cells[0].textContent.toLowerCase();
+                    const id = cells[1].textContent.toLowerCase();
+                    const notes = cells[4].textContent.toLowerCase();
+                    if (
+                        device.includes(query) ||
+                        id.includes(query) ||
+                        notes.includes(query)
+                    ) {
+                        tbody.appendChild(row);
+                    }
+                });
+                // If no match, show a message
+                if (!tbody.hasChildNodes()) {
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.colSpan = 6;
+                    td.textContent = 'No devices found.';
+                    td.style.textAlign = 'center';
+                    tr.appendChild(td);
+                    tbody.appendChild(tr);
                 }
             });
-            // If no match, show a message
-            if (!tbody.hasChildNodes()) {
-                const tr = document.createElement('tr');
-                const td = document.createElement('td');
-                td.colSpan = 6;
-                td.textContent = 'No devices found.';
-                td.style.textAlign = 'center';
-                tr.appendChild(td);
-                tbody.appendChild(tr);
-            }
-        });
 
-        // Password toggle logic
-        document.querySelectorAll('.pw-toggle .pw-icon').forEach(function(icon) {
-            icon.addEventListener('click', function() {
-                const pwToggle = icon.parentElement;
-                const pwValue = pwToggle.querySelector('.pw-value');
-                const pwRaw = pwToggle.querySelector('.pw-raw');
-                if (pwRaw.style.display === 'none') {
-                    pwRaw.style.display = 'inline';
-                    pwValue.style.display = 'none';
-                    icon.title = 'Hide password';
-                } else {
-                    pwRaw.style.display = 'none';
-                    pwValue.style.display = 'inline';
-                    icon.title = 'Show password';
-                }
+            // Password toggle logic
+            document.querySelectorAll('.pw-toggle .pw-icon').forEach(function(icon) {
+                icon.addEventListener('click', function() {
+                    const pwToggle = icon.parentElement;
+                    const pwValue = pwToggle.querySelector('.pw-value');
+                    const pwRaw = pwToggle.querySelector('.pw-raw');
+                    if (pwRaw.style.display === 'none') {
+                        pwRaw.style.display = 'inline';
+                        pwValue.style.display = 'none';
+                        icon.title = 'Hide password';
+                    } else {
+                        pwRaw.style.display = 'none';
+                        pwValue.style.display = 'inline';
+                        icon.title = 'Show password';
+                    }
+                });
             });
-        });
 
-        // Copy text fallback function
-        function copyTextFallback(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                console.log('Fallback: Text copied to clipboard');
-            } catch (err) {
-                console.error('Fallback: Unable to copy text', err);
+            // Copy text fallback function
+            function copyTextFallback(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    console.log('Fallback: Text copied to clipboard');
+                } catch (err) {
+                    console.error('Fallback: Unable to copy text', err);
+                }
+                document.body.removeChild(textarea);
             }
-            document.body.removeChild(textarea);
-        }
 
-        function showPopupTooltip(message, x, y) {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip-popup';
-            tooltip.textContent = message;
-            document.body.appendChild(tooltip);
+            function showPopupTooltip(message, x, y) {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip-popup';
+                tooltip.textContent = message;
+                document.body.appendChild(tooltip);
 
-            tooltip.style.left = `${x}px`;
-            tooltip.style.top = `${y - 40}px`;
-            tooltip.style.opacity = '1';
+                tooltip.style.left = `${x}px`;
+                tooltip.style.top = `${y - 40}px`;
+                tooltip.style.opacity = '1';
 
-            setTimeout(() => {
-                tooltip.style.opacity = '0';
-                setTimeout(() => document.body.removeChild(tooltip), 300);
-            }, 1200);
-        }
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                    setTimeout(() => document.body.removeChild(tooltip), 300);
+                }, 1200);
+            }
 
-        // Copy password logic
-        document.querySelectorAll('.pw-toggle .pw-copy').forEach(function(btn) {
-            btn.addEventListener('click', function(event) {
-                const pwToggle = btn.parentElement;
-                const pwRaw = pwToggle.querySelector('.pw-raw');
-                if (pwRaw) {
-                    const password = pwRaw.textContent.trim(); // Ensure no extra spaces
+            // Copy password logic
+            document.querySelectorAll('.pw-toggle .pw-copy').forEach(function(btn) {
+                btn.addEventListener('click', function(event) {
+                    const pwToggle = btn.parentElement;
+                    const pwRaw = pwToggle.querySelector('.pw-raw');
+                    if (pwRaw) {
+                        const password = pwRaw.textContent.trim(); // Ensure no extra spaces
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(password).then(function() {
+                                showPopupTooltip('Copied!', event.clientX, event.clientY);
+                            }).catch(function(err) {
+                                console.error('Failed to copy password:', err);
+                            });
+                        } else {
+                            copyTextFallback(password);
+                            showPopupTooltip('Copied!', event.clientX, event.clientY);
+                        }
+                    }
+                });
+            });
+
+            // Copy ID logic
+            document.querySelectorAll('.id-toggle .id-copy').forEach(function(btn) {
+                btn.addEventListener('click', function(event) {
+                    const idToggle = btn.parentElement;
+                    const id = idToggle.firstChild.textContent.trim(); // Ensure no extra spaces
                     if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText(password).then(function() {
+                        navigator.clipboard.writeText(id).then(function() {
                             showPopupTooltip('Copied!', event.clientX, event.clientY);
                         }).catch(function(err) {
-                            console.error('Failed to copy password:', err);
+                            console.error('Failed to copy ID:', err);
                         });
                     } else {
-                        copyTextFallback(password);
+                        copyTextFallback(id);
                         showPopupTooltip('Copied!', event.clientX, event.clientY);
                     }
-                }
+                });
             });
-        });
 
-        // Copy ID logic
-        document.querySelectorAll('.id-toggle .id-copy').forEach(function(btn) {
-            btn.addEventListener('click', function(event) {
-                const idToggle = btn.parentElement;
-                const id = idToggle.firstChild.textContent.trim(); // Ensure no extra spaces
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(id).then(function() {
-                        showPopupTooltip('Copied!', event.clientX, event.clientY);
-                    }).catch(function(err) {
-                        console.error('Failed to copy ID:', err);
-                    });
-                } else {
-                    copyTextFallback(id);
-                    showPopupTooltip('Copied!', event.clientX, event.clientY);
-                }
+            const modal = document.getElementById('edit-connection-modal');
+            const closeModal = modal.querySelector('.close-btn');
+            const cancelBtn = modal.querySelector('.cancel-btn');
+
+            // Open modal function
+            function openModal() {
+                modal.style.display = 'flex';
+            }
+
+            // Close modal function
+            function closeModalHandler() {
+                modal.style.display = 'none';
+            }
+
+            closeModal.addEventListener('click', closeModalHandler);
+            cancelBtn.addEventListener('click', closeModalHandler);
+
+            // Open modal on edit button click
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Populate modal fields with current values
+                    const row = button.closest('tr');
+                    const deviceName = row.querySelector('td:nth-child(1)').textContent;
+                    const password = row.querySelector('.pw-raw').textContent;
+                    const notes = row.querySelector('td:nth-child(5)').textContent;
+
+                    document.getElementById('device-name').value = deviceName;
+                    document.getElementById('device-password').value = password;
+                    document.getElementById('device-notes').value = notes;
+
+                    openModal();
+                });
             });
-        });
 
-        const modal = document.getElementById('edit-connection-modal');
-        const closeModal = modal.querySelector('.close-btn');
-        const cancelBtn = modal.querySelector('.cancel-btn');
+            // Save edited connection
+            document.getElementById('edit-connection-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Get updated values
+                const deviceName = document.getElementById('device-name').value;
+                const password = document.getElementById('device-password').value;
+                const notes = document.getElementById('device-notes').value;
 
-        // Open modal function
-        function openModal() {
-            modal.style.display = 'flex';
-        }
+                // Here you would typically send the updated data to the server
+                console.log('Updated Device Name:', deviceName);
+                console.log('Updated Password:', password);
+                console.log('Updated Notes:', notes);
 
-        // Close modal function
-        function closeModalHandler() {
-            modal.style.display = 'none';
-        }
-
-        closeModal.addEventListener('click', closeModalHandler);
-        cancelBtn.addEventListener('click', closeModalHandler);
-
-        // Open modal on edit button click
-        document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                // Populate modal fields with current values
-                const row = button.closest('tr');
-                const deviceName = row.querySelector('td:nth-child(1)').textContent;
-                const password = row.querySelector('.pw-raw').textContent;
-                const notes = row.querySelector('td:nth-child(5)').textContent;
-
-                document.getElementById('device-name').value = deviceName;
-                document.getElementById('device-password').value = password;
-                document.getElementById('device-notes').value = notes;
-
-                openModal();
+                // Close the modal
+                closeModalHandler();
             });
+
+            const newGroupModal = document.getElementById('new-group-modal');
+            const closeNewGroupModal = newGroupModal.querySelector('.close-btn');
+            const cancelNewGroupBtn = newGroupModal.querySelector('.cancel-btn');
+
+            // Open modal function
+            function openNewGroupModal() {
+                newGroupModal.style.display = 'flex';
+            }
+
+            // Close modal function
+            function closeNewGroupModalHandler() {
+                newGroupModal.style.display = 'none';
+            }
+
+            closeNewGroupModal.addEventListener('click', closeNewGroupModalHandler);
+            cancelNewGroupBtn.addEventListener('click', closeNewGroupModalHandler);
+
+            // Example: Open modal on button click
+            document.querySelector('.new-group-btn').addEventListener('click', openNewGroupModal);
         });
-
-        // Save edited connection
-        document.getElementById('edit-connection-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Get updated values
-            const deviceName = document.getElementById('device-name').value;
-            const password = document.getElementById('device-password').value;
-            const notes = document.getElementById('device-notes').value;
-
-            // Here you would typically send the updated data to the server
-            console.log('Updated Device Name:', deviceName);
-            console.log('Updated Password:', password);
-            console.log('Updated Notes:', notes);
-
-            // Close the modal
-            closeModalHandler();
-        });
-
-        const newGroupModal = document.getElementById('new-group-modal');
-        const closeNewGroupModal = newGroupModal.querySelector('.close-btn');
-        const cancelNewGroupBtn = newGroupModal.querySelector('.cancel-btn');
-
-        // Open modal function
-        function openNewGroupModal() {
-            newGroupModal.style.display = 'flex';
-        }
-
-        // Close modal function
-        function closeNewGroupModalHandler() {
-            newGroupModal.style.display = 'none';
-        }
-
-        closeNewGroupModal.addEventListener('click', closeNewGroupModalHandler);
-        cancelNewGroupBtn.addEventListener('click', closeNewGroupModalHandler);
-
-        // Example: Open modal on button click
-        document.querySelector('.new-group-btn').addEventListener('click', openNewGroupModal);
-    });
-    </script>
+        </script>
+    </div>
 </body>
 </html>
