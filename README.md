@@ -1,22 +1,23 @@
 # RustDesk Web Console
 
-This project provides a web-based console for managing RustDesk devices. It includes a Flask backend and a dynamic frontend for seamless device management.
+This project provides a web-based console for managing RustDesk Server OSS devices. It allows you to see all devices that are connected to your private network as well as add a device name, password and additional notes to the connection.
+
+The application integrates directly into RustDesk database itself and provides real-time up to date client information.
 
 ## Features
 - View and manage RustDesk devices.
 - Log connections and device updates.
 - Search and filter devices dynamically.
-- Edit device details and connect to devices directly.
 
 ## Prerequisites
 - Python 3.8 or higher
 - SQLite3
-- RustDesk database (`db_v2.sqlite3`)
-- Flask and required Python packages (see `requirements.txt`)
+- RustDesk database (`/opt/rustdesk/db_v2.sqlite3`)
 
 ## Installation
 
 1. **Clone the Repository**
+   Although it doesn't need to run in the /opt, it is recommended to be put into /opt/RustWeb so it conforms with how RustDesk natively works.
    ```bash
    git clone https://github.com/damiankw/RustWeb.git
    cd RustWeb
@@ -35,34 +36,26 @@ This project provides a web-based console for managing RustDesk devices. It incl
    pip install -r requirements.txt
    ```
 
-4. **Prepare the Database**
-   Ensure the RustDesk database (`db_v2.sqlite3`) is located at `/opt/rustdesk/`.
-   Initialize the web console database:
-   ```bash
-   python -c 'from app import init_db; init_db()'
-   ```
-
 5. **Run the Application**
-   Start the Flask development server:
+   Start the application with Python
    ```bash
    python app.py
    ```
-   The web console will be accessible at `http://localhost:5000`.
+   The web console will be accessible at `http://localhost:9000`.
 
 ## File Structure
-- `app.py`: Main Flask application.
+- `app.py`: Python application for integrating with databases.
 - `templates/`: HTML templates for the frontend.
-- `static/`: Static files (CSS, JavaScript, images).
 - `requirements.txt`: Python dependencies.
 
 ## Notes
 - The RustDesk database (`db_v2.sqlite3`) must be present at `/opt/rustdesk/`.
-- The Flask app runs in debug mode by default. For production, use a WSGI server like Gunicorn.
+- This project uses Flask as the web server which throws a warning about it being a development server. This is not an issue due to the weight of the application.
 
 ## Troubleshooting
 - **Database Errors**: Ensure the RustDesk database path is correct and accessible.
 - **Missing Dependencies**: Reinstall the required packages using `pip install -r requirements.txt`.
-- **Port Conflicts**: Change the port in `app.run()` in `app.py` if `5000` is in use.
+- **Port Conflicts**: Change the port in `app.run()` in `app.py` if `9000` is in use.
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
