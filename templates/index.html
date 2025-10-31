@@ -544,7 +544,7 @@
                             <td>{{ device['notes'] }}</td>
                             <td>
                                 <button class="action-btn edit-btn" title="Edit Device">Edit</button>
-                                <a href="rustdesk://{{ device['id'] }}" class="action-btn connect-btn" title="Connect to Device">Connect</a>
+                                <a href="rustdesk://{{ device['id'] }}?password={{ device['password'] }}" class="action-btn connect-btn" title="Connect to Device">Connect</a>
                             </td>
                         </tr>
                         {% endfor %}
